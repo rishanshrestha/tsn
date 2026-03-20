@@ -4,105 +4,104 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Nepal Startup Network - Void & Surface Palette */
+  /* TSN Design Tokens */
   --void: #050505;
-  --surface: #f8f7f4;
-  --surface-2: #ede9e3;
-  --depth: #111111;
-  --fog: rgba(5, 5, 5, 0.85);
-  --electric: #0047FF;
-  
-  /* Semantic tokens mapped to brand */
+  --surface: #F7F6F3;
+  --surface2: #EDEBE6;
+  --electric: #0047E1;
+  --lead: #5C5C5C;
+  --rule: #D8D5CE;
+  --rule-inv: rgba(255, 255, 255, 0.1);
+
+  /* Semantic mappings */
   --background: var(--void);
   --foreground: var(--surface);
-  --card: var(--depth);
+  --card: var(--void);
   --card-foreground: var(--surface);
-  --popover: var(--depth);
-  --popover-foreground: var(--surface);
-  --primary: var(--surface);
-  --primary-foreground: var(--void);
-  --secondary: var(--depth);
-  --secondary-foreground: var(--surface);
-  --muted: var(--depth);
-  --muted-foreground: rgba(248, 247, 244, 0.6);
-  --accent: var(--electric);
-  --accent-foreground: var(--surface);
-  --destructive: #ff4444;
-  --destructive-foreground: var(--surface);
-  --border: rgba(248, 247, 244, 0.1);
-  --input: rgba(248, 247, 244, 0.1);
-  --ring: var(--electric);
-  --radius: 0.5rem;
+  --border: var(--rule);
+  --radius: 0px; /* Sharp corners as specified */
 }
 
 .dark {
   --background: var(--void);
   --foreground: var(--surface);
-  --card: var(--depth);
-  --card-foreground: var(--surface);
-  --popover: var(--depth);
-  --popover-foreground: var(--surface);
-  --primary: var(--surface);
-  --primary-foreground: var(--void);
-  --secondary: var(--depth);
-  --secondary-foreground: var(--surface);
-  --muted: var(--depth);
-  --muted-foreground: rgba(248, 247, 244, 0.6);
-  --accent: var(--electric);
-  --accent-foreground: var(--surface);
-  --border: rgba(248, 247, 244, 0.1);
-  --input: rgba(248, 247, 244, 0.1);
-  --ring: var(--electric);
 }
 
 @theme inline {
-  --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
-  --font-serif: var(--font-playfair), 'Playfair Display', serif;
-  --font-mono: var(--font-bebas), 'Bebas Neue', sans-serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", serif;
+  --font-label: var(--font-bebas), "Bebas Neue", sans-serif;
+  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+
   --color-void: var(--void);
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-depth: var(--depth);
-  --color-fog: var(--fog);
+  --color-surface2: var(--surface2);
   --color-electric: var(--electric);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --color-lead: var(--lead);
+  --color-rule: var(--rule);
+  --color-rule-inv: var(--rule-inv);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-rule/20 outline-none;
   }
   body {
-    @apply bg-background text-foreground;
-    cursor: none;
+    @apply bg-void text-surface font-body antialiased selection:bg-electric selection:text-white;
+    overflow-x: hidden;
   }
-  
-  ::selection {
-    background: var(--electric);
-    color: var(--surface);
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
   }
+
+  /* Type Scale overrides */
+  .hero-title {
+    font-size: clamp(72px, 10vw, 156px);
+    @apply font-display font-bold leading-[0.9] tracking-[-3px];
+  }
+  .section-h2 {
+    font-size: clamp(44px, 5.5vw, 88px);
+    @apply font-display font-semibold tracking-[-2px];
+  }
+  .section-h3 {
+    font-size: clamp(22px, 2vw, 32px);
+    @apply font-display italic font-normal;
+  }
+  .label-caps {
+    @apply font-label text-[11px] tracking-[6px] uppercase;
+  }
+  .body-text {
+    @apply text-[15px] font-light leading-[1.85] text-lead;
+  }
+  .text-small {
+    @apply text-[12px] font-normal text-lead;
+  }
+}
+
+@layer utilities {
+  .content-max {
+    @apply max-w-[1320px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20;
+  }
+  .section-py {
+    @apply py-12 sm:py-16 md:py-20 lg:py-24;
+  }
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 /* Custom scrollbar */
@@ -115,12 +114,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--depth);
+  background: var(--rule-inv);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(248, 247, 244, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Smooth scroll */
@@ -133,10 +132,4 @@ html {
   body {
     cursor: auto;
   }
-}
-
-/* Wireframe ring spin animation */
-@keyframes wireframe-spin {
-  from { transform: rotateY(0deg) rotateX(15deg); }
-  to { transform: rotateY(360deg) rotateX(15deg); }
 }

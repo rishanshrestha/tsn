@@ -1,81 +1,98 @@
-"use client"
+"use client";
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
-import { MagneticButton } from "@/components/magnetic-button"
-import { LogoMark } from "@/components/logo"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import Link from "next/link";
 
-export function CTASection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+export function CTA() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setSubmitted(true);
+      setEmail("");
+      setTimeout(() => setSubmitted(false), 3000);
+    }
+  };
 
   return (
-    <section className="relative py-32 md:py-48 px-6 overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div 
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, currentColor 1px, transparent 1px),
-              linear-gradient(to bottom, currentColor 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
+    <section id="community" className="min-h-screen flex flex-col lg:flex-row border-t border-rule-inv overflow-hidden">
+      {/* Left (Black) */}
+      <div className="flex-1 bg-void section-py flex flex-col justify-center relative">
+        <div className="content-max w-full">
+          <AnimatedSection className="max-w-xl space-y-12">
+            <span className="font-label text-electric text-[11px] tracking-[6px] uppercase">— Get Involved</span>
+            <h2 className="section-h2 text-white">Join the Movement.</h2>
+            <p className="body-text text-white/55">
+              Whether you&apos;re building the next unicorn, investing in Nepal&apos;s future,
+              or want to mentor the next generation of founders, there&apos;s a place
+              for you at TSN. Let&apos;s build something world-class together.
+            </p>
+            <div className="pt-8">
+              <MagneticButton>
+                <Link href="/cohort" className="bg-surface text-void font-body text-[11px] tracking-[4px] uppercase px-12 py-6 hover:bg-electric hover:text-white transition-all duration-500 shadow-xl group inline-block">
+                  Apply to Cohort 5
+                  <span className="ml-4 inline-block translate-x-0 group-hover:translate-x-2 transition-transform duration-300">→</span>
+                </Link>
+              </MagneticButton>
+            </div>
+          </AnimatedSection>
+        </div>
       </div>
 
-      <div className="relative max-w-4xl mx-auto text-center">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex justify-center mb-12"
-        >
-          <LogoMark />
-        </motion.div>
+      {/* Right (Cream) */}
+      <div className="flex-1 bg-surface2 section-py flex flex-col justify-center relative">
+        <div className="content-max w-full space-y-16">
+          {/* Newsletter */}
+          <AnimatedSection delay={0.1} className="space-y-8">
+            <h3 className="section-h3 not-italic font-semibold text-void">Stay Updated.</h3>
+            <form onSubmit={handleSubmit} className="relative border-b border-rule/50 py-4 group focus-within:border-electric transition-colors">
+              <input
+                type="email"
+                placeholder="EMAIL ADDRESS"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-transparent font-label text-[14px] tracking-[3px] text-void placeholder:text-lead/30 focus:outline-none uppercase"
+                required
+              />
+              <button type="submit" className="absolute right-0 bottom-4 font-label text-[11px] tracking-[4px] uppercase text-electric hover:translate-x-2 transition-transform">
+                Submit
+              </button>
+            </form>
+            {submitted && (
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="font-body text-[12px] text-electric font-medium"
+              >
+                ✓ Thank you! You&apos;ve been subscribed.
+              </motion.p>
+            )}
+            <p className="font-body text-[11px] text-lead/60 max-w-sm">
+              Get bi-weekly insights, event invites, and ecosystem news delivered
+              directly to your inbox. No spam, just value.
+            </p>
+          </AnimatedSection>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif text-4xl md:text-6xl lg:text-7xl font-medium leading-tight mb-8 text-balance"
-        >
-          Ready to build the
-          <br />
-          <span className="italic">future?</span>
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto mb-12 leading-relaxed"
-        >
-          Join Nepal's most ambitious founders and turn your vision into reality. Your journey starts here.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <MagneticButton 
-            variant="primary" 
-            className="px-10 py-5 text-sm tracking-widest uppercase rounded-full"
-          >
-            Apply Now
-          </MagneticButton>
-          <MagneticButton 
-            variant="ghost" 
-            className="px-8 py-4 text-sm tracking-widest uppercase"
-          >
-            Contact Us
-          </MagneticButton>
-        </motion.div>
+          {/* Secondary CTAs */}
+          <AnimatedSection delay={0.2} className="pt-12 border-t border-rule/30">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <Link href="/events/ai-summit-2026" className="space-y-4 group cursor-pointer block">
+                <span className="font-label text-[9px] tracking-[3px] uppercase text-lead/60 group-hover:text-electric transition-colors">Attend</span>
+                <h4 className="font-display text-xl font-semibold text-void group-hover:translate-x-2 transition-transform duration-500">AI Summit 2026 →</h4>
+              </Link>
+              <a href="https://www.thestartupnetworknepal.com/get-involved" target="_blank" rel="noopener noreferrer" className="space-y-4 group cursor-pointer block">
+                <span className="font-label text-[9px] tracking-[3px] uppercase text-lead/60 group-hover:text-electric transition-colors">Collaborate</span>
+                <h4 className="font-display text-xl font-semibold text-void group-hover:translate-x-2 transition-transform duration-500">Become a Mentor →</h4>
+              </a>
+            </div>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
-  )
+  );
 }

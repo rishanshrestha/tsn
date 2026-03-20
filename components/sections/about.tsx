@@ -1,75 +1,101 @@
-"use client"
+"use client";
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion, Variants } from "framer-motion";
+import { AnimatedSection, staggerContainer, staggerItem } from "@/components/ui/AnimatedSection";
 
-export function AboutSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+const PILLARS = [
+  {
+    id: "01",
+    name: "Strategic Programs",
+    description: "Empowering founders to build impactful ventures through incubation and structured guidance.",
+  },
+  {
+    id: "02",
+    name: "Mentorship & Growth",
+    description: "Bridging the gap between ideas and opportunities with access to global industry experts.",
+  },
+  {
+    id: "03",
+    name: "Asia-Wide Network",
+    description: "Connecting startups across Asia to create a robust ecosystem of innovators and investors.",
+  },
+  {
+    id: "04",
+    name: "Sustainable Scaling",
+    description: "Establishing Nepal as a regional hub for innovation and sustainable business growth.",
+  },
+];
 
-  const stats = [
-    { value: "500+", label: "Founders" },
-    { value: "120+", label: "Startups" },
-    { value: "50M+", label: "Raised (NPR)" },
-    { value: "25+", label: "Events" },
-  ]
-
+export function About() {
   return (
-    <section id="about" className="relative py-32 md:py-48 px-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Section header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-24"
-        >
-          <span className="text-xs tracking-widest uppercase text-muted-foreground mb-4 block">
-            About Us
-          </span>
-          <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl font-medium leading-tight max-w-4xl text-balance">
-            Building Nepal's most ambitious startup community
-          </h2>
-        </motion.div>
+    <div id="about" className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left (Black) */}
+      <div className="flex-1 bg-void section-py flex flex-col justify-center relative overflow-hidden">
+        <div className="content-max w-full">
+          <AnimatedSection className="max-w-xl space-y-8">
+            <span className="font-label text-electric text-[11px] tracking-[6px] uppercase">— Our Mission</span>
+            <h2 className="section-h2 text-white">The Engine of Nepal's Innovation.</h2>
+            <p className="body-text text-white/55">
+              TSN is a catalyst for the next generation of Nepali entrepreneurs. We believe that 
+              world-class companies can be built in Kathmandu, powered by local talent and 
+              global perspectives. Our platform provides the infrastructure, mentorship, and 
+              capital required to transform bold ideas into scalable realities.
+            </p>
+            <div className="pt-12">
+              <span className="font-label text-[9px] tracking-[5px] text-white/20 uppercase">
+                Founded Kathmandu, 2022
+              </span>
+            </div>
+          </AnimatedSection>
+        </div>
 
-        {/* Two column layout */}
-        <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
-          {/* Left column - Description */}
+        {/* Decorative Sphere */}
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden lg:block">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-6"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+            className="w-[400px] h-[400px] rounded-full border border-electric/10 relative"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              We are a collective of dreamers, builders, and disruptors who believe that great ideas can emerge from anywhere. Our mission is to provide the resources, mentorship, and community that Nepal's entrepreneurs need to succeed.
-            </p>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              From early-stage ideation to scaling globally, we support founders at every step of their journey. Because when one of us wins, we all win.
-            </p>
+            <div className="absolute inset-0 border border-electric/5 rounded-full rotate-45" />
+            <div className="absolute inset-0 border border-electric/5 rounded-full -rotate-45" />
           </motion.div>
+        </div>
+      </div>
 
-          {/* Right column - Stats */}
+      {/* Right (Cream) */}
+      <div className="flex-1 bg-surface2 section-py flex flex-col justify-center">
+        <div className="content-max w-full">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-2 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="space-y-0"
           >
-            {stats.map((stat, i) => (
-              <div key={i} className="group">
-                <div className="font-serif text-4xl md:text-5xl font-medium mb-2 group-hover:text-accent transition-colors">
-                  {stat.value}
+            {PILLARS.map((pillar) => (
+              <motion.div
+                key={pillar.id}
+                variants={staggerItem}
+                whileHover={{ x: 10 }}
+                className="group border-b border-rule/30 py-10 flex gap-12 cursor-default"
+              >
+                <span className="font-display italic text-[56px] leading-none text-rule/40 transition-colors group-hover:text-void/60">
+                  {pillar.id}
+                </span>
+                <div className="space-y-3 pt-2">
+                  <h3 className="section-h3 text-void group-hover:text-electric transition-colors not-italic font-semibold">
+                    {pillar.name}
+                  </h3>
+                  <p className="font-body text-[13px] text-lead leading-relaxed max-w-sm">
+                    {pillar.description}
+                  </p>
                 </div>
-                <div className="text-sm text-muted-foreground tracking-wider uppercase">
-                  {stat.label}
-                </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
       </div>
-    </section>
-  )
+    </div>
+  );
 }

@@ -1,105 +1,87 @@
-"use client"
+"use client";
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
-import { TiltCard } from "@/components/tilt-card"
-import { ArrowUpRight, Lightbulb, Users, Rocket, Zap } from "lucide-react"
+import { motion, Variants } from "framer-motion";
+import { PROGRAMS } from "@/lib/constants";
+import { AnimatedSection, staggerContainer, staggerItem } from "@/components/ui/AnimatedSection";
+import { TiltCard } from "@/components/ui/TiltCard";
 
-const programs = [
-  {
-    icon: Lightbulb,
-    title: "Incubation",
-    description: "12-week intensive program for early-stage startups. Get mentorship, workspace, and seed funding support.",
-    tag: "Early Stage",
-  },
-  {
-    icon: Rocket,
-    title: "Acceleration",
-    description: "Scale your startup with strategic partnerships, investor access, and market expansion guidance.",
-    tag: "Growth",
-  },
-  {
-    icon: Users,
-    title: "Founder Circle",
-    description: "Exclusive peer network for founders. Monthly masterminds, retreats, and lifetime community access.",
-    tag: "Network",
-  },
-  {
-    icon: Zap,
-    title: "Startup Weekend",
-    description: "54-hour hackathon to validate your idea. Build, pitch, and launch in one weekend.",
-    tag: "Events",
-  },
-]
-
-export function ProgramsSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-
+export function Programs() {
   return (
-    <section id="programs" className="relative py-32 md:py-48 px-6 bg-card">
-      <div className="max-w-7xl mx-auto">
-        {/* Section header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-8"
-        >
-          <div>
-            <span className="text-xs tracking-widest uppercase text-muted-foreground mb-4 block">
-              What We Offer
-            </span>
-            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl font-medium leading-tight text-balance">
-              Programs designed
-              <br />
-              for <span className="italic">impact</span>
-            </h2>
-          </div>
-          <p className="text-muted-foreground max-w-md leading-relaxed">
-            Whether you're just starting out or ready to scale, we have a program that fits your journey.
-          </p>
-        </motion.div>
+    <section id="programs" className="bg-surface section-py border-t border-rule/20">
+      <div className="content-max">
+        {/* Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
+          <AnimatedSection viewportAmount={0.5}>
+            <h2 className="section-h2 text-void">Our Strategic Programs.</h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1} viewportAmount={0.5} className="flex flex-col md:flex-row gap-8 items-start md:items-center pl-0 lg:pl-12 lg:border-l border-rule/20">
+            <p className="font-body text-[15px] text-lead leading-relaxed max-w-sm">
+              From ideation to exit, TSN provides the frameworks and networks
+              required to build institutional-grade startups in the Himalayan region.
+            </p>
+            <a href="#programs" className="font-label text-[11px] tracking-[4px] uppercase text-electric hover:translate-x-2 transition-transform inline-block">
+              View All Programs →
+            </a>
+          </AnimatedSection>
+        </div>
 
-        {/* Programs grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {programs.map((program, i) => (
-            <motion.div
-              key={program.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 * i, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <TiltCard className="h-full">
-                <div className="group relative h-full bg-background border border-border/50 rounded-lg p-8 md:p-10 hover:border-foreground/20 transition-colors">
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-full bg-foreground/5 flex items-center justify-center mb-6 group-hover:bg-foreground/10 transition-colors">
-                    <program.icon className="w-5 h-5" />
+        {/* Grid */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-rule/20"
+        >
+          {PROGRAMS.map((program) => (
+            <TiltCard key={program.id} className="group border-r border-b border-rule/20 bg-surface">
+              <motion.div
+                className="p-10 md:p-12 h-full flex flex-col justify-between transition-colors duration-500 group-hover:bg-void group-hover:text-white"
+                variants={staggerItem}
+              >
+                <div className="space-y-8">
+                  <div className="flex justify-between items-start">
+                    <span className="label-caps text-electric group-hover:text-white transition-colors">
+                      {program.label}
+                    </span>
+                    <span className="font-display italic text-2xl text-rule group-hover:text-white/20 transition-colors">
+                      {program.id}
+                    </span>
                   </div>
 
-                  {/* Content */}
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <h3 className="font-serif text-2xl md:text-3xl font-medium">
+                  <div className="space-y-4">
+                    <h3 className="section-h3 not-italic font-semibold text-void group-hover:text-white transition-colors">
                       {program.title}
                     </h3>
-                    <ArrowUpRight className="w-5 h-5 opacity-0 -translate-y-2 translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
+                    <p className="font-body text-[13px] text-lead group-hover:text-white/60 transition-colors leading-relaxed">
+                      {program.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-12 space-y-6">
+                  <div className="flex flex-col gap-1">
+                    <span className="font-label text-[9px] tracking-[3px] uppercase text-void/70 group-hover:text-white/40">Duration / Cohort</span>
+                    <span className="font-body text-[12px] font-medium text-void group-hover:text-white transition-colors">
+                      {program.duration} · {program.cohort}
+                    </span>
                   </div>
 
-                  <p className="text-muted-foreground leading-relaxed mb-6">
-                    {program.description}
-                  </p>
+                  <div className="relative h-[2px] w-9 bg-electric group-hover:bg-white transition-all duration-500 group-hover:w-20" />
 
-                  {/* Tag */}
-                  <span className="inline-block px-3 py-1 text-xs tracking-wider uppercase border border-border rounded-full">
-                    {program.tag}
-                  </span>
+                  <div className="flex justify-end overflow-hidden">
+                    <motion.span
+                      className="text-2xl opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-electric group-hover:text-white"
+                    >
+                      →
+                    </motion.span>
+                  </div>
                 </div>
-              </TiltCard>
-            </motion.div>
+              </motion.div>
+            </TiltCard>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
-  )
+  );
 }

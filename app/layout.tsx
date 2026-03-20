@@ -1,19 +1,18 @@
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Playfair_Display, Bebas_Neue } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
+import { DM_Sans, Cormorant_Garamond, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 
 const dmSans = DM_Sans({ 
   subsets: ["latin"],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['200', '300', '400', '500'],
   variable: '--font-dm-sans'
 })
 
-const playfair = Playfair_Display({ 
+const cormorant = Cormorant_Garamond({ 
   subsets: ["latin"],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-playfair'
+  variable: '--font-cormorant'
 })
 
 const bebasNeue = Bebas_Neue({ 
@@ -23,15 +22,8 @@ const bebasNeue = Bebas_Neue({
 })
 
 export const metadata: Metadata = {
-  title: 'Nepal Startup Network | Building Tomorrow\'s Founders',
-  description: 'Nepal\'s premier startup ecosystem connecting founders, investors, and innovators. Join the movement shaping the future of entrepreneurship in Nepal.',
-  keywords: ['startup', 'nepal', 'entrepreneurship', 'founders', 'investors', 'innovation', 'tech'],
-  authors: [{ name: 'Nepal Startup Network' }],
-  openGraph: {
-    title: 'Nepal Startup Network',
-    description: 'Building Tomorrow\'s Founders',
-    type: 'website',
-  },
+  title: 'The Startup Network Nepal (TSN) | Kathmandu\'s Startup Ecosystem',
+  description: 'TSN is Nepal\'s most credible startup ecosystem. Built for ambitious founders, investors, and mentors in South Asia.',
 }
 
 export const viewport: Viewport = {
@@ -46,10 +38,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${dmSans.variable} ${playfair.variable} ${bebasNeue.variable} font-sans antialiased`}>
+    <html lang="en">
+      <body className={`${dmSans.variable} ${cormorant.variable} ${bebasNeue.variable} font-body antialiased`}>
         {children}
-        <Analytics />
       </body>
     </html>
   )

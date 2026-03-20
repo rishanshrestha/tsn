@@ -1,104 +1,156 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Logo } from "@/components/logo"
-import { MagneticButton } from "@/components/magnetic-button"
-import { ArrowDown } from "lucide-react"
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { HeroScene } from "./HeroScene";
+import { STATS } from "@/lib/constants";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Logo } from "@/components/logo";
 
-export function HeroSection() {
-  const scrollToNext = () => {
-    const aboutSection = document.getElementById("about")
-    aboutSection?.scrollIntoView({ behavior: "smooth" })
-  }
+export function Hero() {
+  const targetRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Parallax mouse move
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set((clientX / innerWidth - 0.5) * 20);
+    mouseY.set((clientY / innerHeight - 0.5) * 20);
+  };
+
+  const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+
+  // Phases of the scroll animation
+  const logoZ = useTransform(scrollYProgress, [0, 0.35], [0, -100]);
+  const logoScale = useTransform(scrollYProgress, [0, 0.35], [1, 0.8]);
+  const heroOpacity = useTransform(scrollYProgress, [0.1, 0.45], [1, 0]);
+
+  // Phase 5 [0.78, 1.00]: Black curtain slices
+  const curtainScaleX = useTransform(scrollYProgress, [0.78, 1], [0, 1]);
+
+  const statsY = useTransform(scrollYProgress, [0.35, 0.55], ["100%", "0%"]);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-24">
-      {/* Background grid pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div 
-          className="w-full h-full"
+    <div
+      ref={targetRef}
+      className="relative h-[400vh] bg-void"
+      onMouseMove={handleMouseMove}
+    >
+      {/* Three.js Background */}
+      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden relative">
+        <HeroScene />
+
+        {/* Hero Content */}
+        <motion.div
+          ref={containerRef}
+          className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-8"
           style={{
-            backgroundImage: `
-              linear-gradient(to right, currentColor 1px, transparent 1px),
-              linear-gradient(to bottom, currentColor 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px',
+            scale: logoScale,
+            translateZ: logoZ,
+            opacity: heroOpacity,
+            x: springX,
+            y: springY
           }}
-        />
-      </div>
-
-      {/* Main content */}
-      <div className="relative z-10 text-center max-w-5xl mx-auto">
-        {/* Animated logo */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex justify-center mb-16"
         >
-          <Logo size="large" />
-        </motion.div>
-
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-8 font-light leading-relaxed"
-        >
-          Empowering Nepal's next generation of founders to build, connect, and scale
-        </motion.p>
-
-        {/* Hero headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif text-4xl md:text-6xl lg:text-7xl font-medium leading-tight mb-12 text-balance"
-        >
-          Where ideas become
-          <br />
-          <span className="italic">movements</span>
-        </motion.h1>
-
-        {/* CTA buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <MagneticButton 
-            variant="primary" 
-            className="px-8 py-4 text-sm tracking-widest uppercase rounded-full"
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="font-label text-[11px] tracking-[6px] uppercase text-white/25 mb-12"
           >
-            Join the Network
-          </MagneticButton>
-          <MagneticButton 
-            variant="outline" 
-            className="px-8 py-4 text-sm tracking-widest uppercase rounded-full"
-          >
-            Explore Startups
-          </MagneticButton>
-        </motion.div>
-      </div>
+            Est. 2022 · Kathmandu, Nepal
+          </motion.p>
 
-      {/* Scroll indicator */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.8 }}
-        onClick={scrollToNext}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-      >
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-        >
-          <ArrowDown className="w-4 h-4" />
+          {/* Official Logo Replace Text */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            className="mb-16"
+          >
+            <Logo size="large" className="text-white scale-150 md:scale-[2.5]" />
+          </motion.div>
+
+          {/* Subhead */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
+            className="font-body text-sm font-light text-white/40 max-w-md mx-auto mb-16 leading-relaxed"
+          >
+            Where Nepal's boldest ideas become world-class businesses.
+          </motion.p>
+
+          {/* CTA Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
+            className="flex flex-wrap items-center justify-center gap-6"
+          >
+            <MagneticButton>
+              <a href="#programs" className="bg-surface text-void font-body text-[10px] tracking-[2.5px] uppercase px-10 py-4 hover:bg-electric hover:text-white transition-colors duration-500 inline-block">
+                Explore Programs
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a href="https://www.thestartupnetworknepal.com/" target="_blank" rel="noopener noreferrer" className="border border-white/20 text-white font-body text-[10px] tracking-[2.5px] uppercase px-10 py-4 hover:bg-white hover:text-void transition-all duration-500 inline-block">
+                Watch Our Story →
+              </a>
+            </MagneticButton>
+          </motion.div>
         </motion.div>
-      </motion.button>
-    </section>
-  )
+
+        {/* Stats Bar */}
+        <motion.div
+          className="absolute bottom-0 left-0 w-full bg-void border-t border-rule-inv z-20"
+          style={{ y: statsY }}
+        >
+          <div className="content-max grid grid-cols-2 md:grid-cols-4 divide-x divide-rule-inv py-10">
+            {STATS.map((stat, i) => (
+              <div key={i} className="flex flex-col items-center justify-center gap-2 px-8">
+                <span className="font-label text-[42px] leading-none text-white">{stat.value}</span>
+                <span className="font-body text-[9px] tracking-[3px] uppercase text-white/40">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <span className="font-label text-[10px] tracking-[3px] text-white/40">SCROLL</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-electric to-transparent" />
+        </motion.div>
+
+        {/* Curtain Slices (Phase 5) */}
+        <div className="absolute inset-0 z-50 pointer-events-none flex flex-col">
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="flex-1 bg-void"
+              style={{
+                scaleX: curtainScaleX,
+                originX: i % 2 === 0 ? 0 : 1,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
