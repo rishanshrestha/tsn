@@ -39,7 +39,7 @@ export function Logo({ className = "", size = "default", showText = true }: Logo
 
       {showText && (
         <div className="flex flex-col">
-          <span 
+          <span
             className={cn(
               "font-display font-bold leading-none tracking-tight",
               size === "small" ? "text-lg" : size === "large" ? "text-5xl" : "text-2xl"
@@ -47,7 +47,7 @@ export function Logo({ className = "", size = "default", showText = true }: Logo
           >
             The Startup
           </span>
-          <span 
+          <span
             className={cn(
               "font-display italic font-normal leading-none tracking-wide",
               size === "small" ? "text-sm" : size === "large" ? "text-2xl" : "text-lg"

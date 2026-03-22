@@ -48,9 +48,8 @@ export function Navbar() {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="content-max h-16 sm:h-20 flex items-center justify-between gap-4">
-        {/* Logo */}
-          <Link href="/" className="group flex-shrink-0 min-w-0">
-          <Logo size="small" showText={true} className="text-surface" />
+        <Link href="/" className="group flex-shrink-0 min-w-0">
+          <Logo size="large" showText={false} className="text-surface" />
         </Link>
 
         {/* Desktop Links - hide on smaller screens to avoid overflow */}
@@ -70,7 +69,7 @@ export function Navbar() {
         {/* Right Action */}
         <div className="hidden lg:block flex-shrink-0">
           <Link href="/join" className="bg-surface text-void font-body text-[10px] tracking-[2.5px] uppercase px-8 py-3.5 hover:bg-electric hover:text-white transition-colors duration-500 inline-block">
-            Apply Now
+            Start Your Journey
           </Link>
         </div>
 
