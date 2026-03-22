@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 import { Logo, LogoMark } from "@/components/logo"
 import { MagneticButton } from "@/components/magnetic-button"
@@ -16,42 +16,43 @@ const navLinks = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-    
     const handleScroll = () => {
       setHasScrolled(window.scrollY > 50)
     }
-    
-    handleScroll() // Initial check
+
+    handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // 🔥 Prevent background scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto"
+  }, [isOpen])
+
   return (
     <>
+      {/* HEADER */}
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${
-          hasScrolled ? 'py-4' : 'py-6'
+          hasScrolled ? "py-4" : "py-6"
         }`}
       >
-        <div 
+        <div
           className={`max-w-7xl mx-auto flex items-center justify-between rounded-full px-6 py-3 transition-all duration-300 ${
-            hasScrolled ? 'bg-background/80 backdrop-blur-xl border border-border/50' : ''
+            hasScrolled
+              ? "bg-background/80 backdrop-blur-xl border border-border/50"
+              : ""
           }`}
         >
           {/* Logo */}
-          <a href="#" className="relative z-10">
-            {hasScrolled ? (
-              <LogoMark />
-            ) : (
-              <Logo size="small" />
-            )}
+          <a href="#" className="relative z-50">
+            {hasScrolled ? <LogoMark /> : <Logo size="small" />}
           </a>
 
-          {/* Desktop nav */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
@@ -66,7 +67,7 @@ export function Navigation() {
 
           {/* CTA */}
           <div className="hidden md:block">
-            <MagneticButton 
+            <MagneticButton
               variant="primary"
               className="px-6 py-2.5 text-xs tracking-widest uppercase rounded-full"
             >
@@ -74,9 +75,9 @@ export function Navigation() {
             </MagneticButton>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Button */}
           <button
-            className="md:hidden relative z-10 w-10 h-10 flex items-center justify-center"
+            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -85,49 +86,55 @@ export function Navigation() {
         </div>
       </motion.header>
 
-      {/* Mobile menu */}
-      <motion.div
-        initial={false}
-        animate={{
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? "auto" : "none",
-        }}
-        className="fixed inset-0 z-40 bg-background"
-      >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navLinks.map((link, i) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ 
-                opacity: isOpen ? 1 : 0, 
-                y: isOpen ? 0 : 20 
-              }}
-              transition={{ delay: isOpen ? 0.1 * i : 0 }}
-              className="font-serif text-3xl hover:text-muted-foreground transition-colors"
-            >
-              {link.label}
-            </motion.a>
-          ))}
+      {/* 🔥 MOBILE MENU */}
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: isOpen ? 1 : 0, 
-              y: isOpen ? 0 : 20 
-            }}
-            transition={{ delay: isOpen ? 0.4 : 0 }}
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl"
           >
-            <MagneticButton 
-              variant="primary"
-              className="px-8 py-4 text-sm tracking-widest uppercase rounded-full mt-4"
+            {/* Sliding Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.35 }}
+              className="flex flex-col items-center justify-center h-full gap-8"
             >
-              Join Us
-            </MagneticButton>
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: 0.1 * i }}
+                  className="font-serif text-3xl hover:text-muted-foreground transition-colors"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <MagneticButton
+                  variant="primary"
+                  className="px-8 py-4 text-sm tracking-widest uppercase rounded-full mt-4"
+                >
+                  Join Us
+                </MagneticButton>
+              </motion.div>
+            </motion.div>
           </motion.div>
-        </div>
-      </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
