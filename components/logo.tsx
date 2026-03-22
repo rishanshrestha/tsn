@@ -28,7 +28,7 @@ export function Logo({ className = "", size = "default", showText = true }: Logo
         className="relative flex items-center justify-center"
       >
         <Image
-          src="/apple-icon-trasnparent.png"
+          src="/images/apple-icon-trasnparent.png"
           alt="TSN Logo"
           width={width}
           height={height}

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Cormorant_Garamond, Bebas_Neue } from 'next/font/google'
 import './globals.css'
+import { ScrollToTop } from '@/components/layout/ScrollToTop'
 
 const dmSans = DM_Sans({ 
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${cormorant.variable} ${bebasNeue.variable} font-body antialiased`}>
+        <ScrollToTop />
         {children}
       </body>
     </html>

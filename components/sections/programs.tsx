@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { PROGRAMS } from "@/lib/constants";
 import { AnimatedSection, staggerContainer, staggerItem } from "@/components/ui/AnimatedSection";
@@ -19,9 +20,9 @@ export function Programs() {
               From ideation to exit, TSN provides the frameworks and networks
               required to build institutional-grade startups in the Himalayan region.
             </p>
-            <a href="#programs" className="font-label text-[11px] tracking-[4px] uppercase text-electric hover:translate-x-2 transition-transform inline-block">
+            <Link href="/#programs" className="font-label text-[11px] tracking-[4px] uppercase text-electric hover:translate-x-2 transition-transform inline-block">
               View All Programs →
-            </a>
+            </Link>
           </AnimatedSection>
         </div>
 

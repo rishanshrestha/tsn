@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
@@ -19,15 +20,11 @@ const NAV_LINKS = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
+  const [mounted, setMounted] = useState(false);
 
-  // Switch nav text color based on scroll progress (if sections are white/black)
-  // This is a simplified version - in a real app, you'd use Intersection Observer per section
-  const textColor = useTransform(
-    scrollYProgress,
-    [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-    ["#fff", "#fff", "#050505", "#050505", "#050505", "#050505", "#050505", "#050505", "#050505", "#050505", "#fff"]
-  );
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,11 +34,27 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <motion.nav
       className={cn(
-        "fixed top-0 left-0 w-full z-[100] transition-all duration-500 border-b border-transparent",
-        isScrolled && "bg-void/88 backdrop-blur-xl border-rule-inv"
+        "fixed top-0 left-0 w-full z-[100] transition-all duration-500 border-b border-transparent isolate",
+        "max-lg:bg-void/95 max-lg:backdrop-blur-md max-lg:border-rule-inv",
+        "lg:bg-transparent",
+        isScrolled && "lg:bg-void/95 lg:backdrop-blur-xl lg:border-rule-inv"
       )}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -94,57 +107,62 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 top-0 bg-void z-[110] flex flex-col items-center justify-center p-6 sm:p-8 lg:hidden overflow-y-auto"
-          >
-            <button
-              className="absolute top-4 right-4 sm:top-8 sm:right-8 p-3 sm:p-4 text-surface font-label text-[11px] sm:text-base tracking-[3px] uppercase hover:text-electric transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              Close
-            </button>
-            <div className="flex flex-col gap-6 sm:gap-8 text-center pt-16 sm:pt-0">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-surface hover:text-electric transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </motion.div>
-              ))}
+      {/* Mobile Menu Overlay - Portal to body so fixed positioning covers full viewport */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {isMobileMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
+                initial={{ opacity: 0, x: "100%" }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed inset-0 w-full min-h-screen h-[100dvh] bg-void z-[200] flex flex-col items-center justify-center p-6 sm:p-8 lg:hidden overflow-y-auto overscroll-contain"
+                style={{ top: 0, left: 0, right: 0, bottom: 0 }}
               >
-                <Link
-                  href="/join"
+                <button
+                  className="absolute top-4 right-4 sm:top-8 sm:right-8 p-3 sm:p-4 text-surface font-label text-[11px] sm:text-base tracking-[3px] uppercase hover:text-electric transition-colors z-10"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="mt-6 sm:mt-8 bg-surface text-void font-body text-[10px] sm:text-[11px] tracking-[3px] uppercase px-10 sm:px-12 py-3.5 sm:py-4 inline-block hover:bg-electric hover:text-white transition-colors"
+                  aria-label="Close menu"
                 >
-                  Apply Now
-                </Link>
+                  Close
+                </button>
+                <div className="flex flex-col gap-6 sm:gap-8 text-center pt-16 sm:pt-0">
+                  {NAV_LINKS.map((link, i) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-surface hover:text-electric transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    <Link
+                      href="/join"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="mt-6 sm:mt-8 bg-surface text-void font-body text-[10px] sm:text-[11px] tracking-[3px] uppercase px-10 sm:px-12 py-3.5 sm:py-4 inline-block hover:bg-electric hover:text-white transition-colors"
+                    >
+                      Apply Now
+                    </Link>
+                  </motion.div>
+                </div>
               </motion.div>
-            </div>
-          </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </motion.nav>
   );
 }

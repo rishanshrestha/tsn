@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
@@ -71,10 +72,10 @@ export function Upcoming() {
               </div>
 
               <MagneticButton className="w-full">
-                <a href="/events/ai-summit-2026#ticketing" className="w-full bg-surface text-void font-body text-[10px] sm:text-[11px] tracking-[4px] uppercase py-5 sm:py-6 hover:bg-electric hover:text-white transition-all duration-500 shadow-xl group block text-center">
+                <Link href="/events/ai-summit-2026#ticketing" className="w-full bg-surface text-void font-body text-[10px] sm:text-[11px] tracking-[4px] uppercase py-5 sm:py-6 hover:bg-electric hover:text-white transition-all duration-500 shadow-xl group block text-center">
                   Get Tickets
                   <span className="ml-2 inline-block translate-x-0 group-hover:translate-x-2 transition-transform duration-300">→</span>
-                </a>
+                </Link>
               </MagneticButton>
 
               <div className="flex flex-wrap gap-8 sm:gap-12 pt-6 sm:pt-8 border-t border-rule-inv">
