@@ -4,15 +4,15 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Programs } from "@/components/sections/Programs";
+import { Hero } from "@/components/sections/hero";
+import { About } from "@/components/sections/about";
+import { Programs } from "@/components/sections/programs";
 import { Timeline } from "@/components/sections/Timeline";
 import { Upcoming } from "@/components/sections/Upcoming";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Team } from "@/components/sections/Team";
 import { Advisors } from "@/components/sections/Advisors";
-import { CTA } from "@/components/sections/CTA";
+import { CTA } from "@/components/sections/cta";
 import { LenisProvider } from "@/components/layout/LenisProvider";
 
 // Dynamic imports for client-only components
