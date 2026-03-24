@@ -10,50 +10,63 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AISummitRegistrationForm } from "@/components/sections/AISummitRegistrationForm";
 import { AISummitLogo } from "@/components/AISummitLogo";
 import { EVENT_DATE, VENUE, EXPECTED_ATTENDEES, TICKET_TIERS, ITINERARY } from "@/lib/ai-summit-2026";
+import { SpeakersSection } from "@/components/sections/SpeakersSection";
+import { AISummitCountdown } from "@/components/ui/AISummitCountdown";
+import { AINetworkFlow } from "@/components/ui/AINetworkFlow";
+import { AISummitPreloader } from "@/components/ui/AISummitPreloader";
 
 export default function AISummit2026Page() {
   return (
     <LenisProvider>
-      <main className="bg-black min-h-screen font-ai-body text-ai-grey-300">
+      <AISummitPreloader />
+      <main className="bg-black min-h-screen font-ai-body text-ai-grey-300 relative overflow-hidden">
+        <AINetworkFlow color="#A855F7" opacity={0.15} count={50} />
         <Navbar />
 
         {/* Hero Banner */}
-        <section className="pt-28 sm:pt-32 md:pt-36 pb-12 sm:pb-16 border-b border-ai-white/10 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <span className="font-ai-title text-[14vw] sm:text-[12vw] text-ai-white/[0.03] uppercase leading-none select-none font-bold">
-              2026
+        <section className="pt-28 sm:pt-32 md:pt-40 pb-20 sm:pb-24 border-b border-ai-white/10 relative">
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+            <span className="font-ai-title text-[20vw] text-ai-white/[0.02] uppercase leading-none select-none font-bold tracking-tighter">
+              FUTURISTIC
             </span>
           </div>
           <div className="content-max relative z-10">
-            <div className="flex flex-col gap-8">
-              <AnimatedSection className="flex-1 space-y-6 sm:space-y-8">
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                  <div className="flex items-center gap-2 px-3 py-1 border border-ai-white/10 rounded-full">
-                    <div className="w-1.5 h-1.5 rounded-full bg-ai-tech animate-pulse shadow-[0_0_8px_var(--ai-tech)]" />
-                    <span className="font-ai-title text-[10px] tracking-[3px] uppercase text-ai-white/60">{EVENT_DATE}</span>
-                  </div>
-                  <div className="bg-ai-tech/15 border border-ai-tech/35 px-3 sm:px-4 py-1">
-                    <span className="font-ai-title text-[9px] sm:text-[10px] tracking-[3px] uppercase text-ai-tech">Registration Open</span>
-                  </div>
+            <div className="flex flex-col lg:flex-row items-center gap-16">
+              <AnimatedSection className="flex-1 space-y-8 sm:space-y-10">
+                <div className="space-y-4">
+                  <AISummitLogo size="hero" className="drop-shadow-[0_0_40px_rgba(168,85,247,0.3)]" />
+                  <h1 className="font-ai-title text-5xl sm:text-7xl lg:text-8xl text-ai-white font-bold tracking-tighter leading-[0.9]">
+                    Shaping the <br /> <span className="text-ai-tech">Future of AI</span>
+                  </h1>
                 </div>
-                <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-                  <AISummitLogo size="hero" className="drop-shadow-[0_0_30px_rgba(168,85,247,0.2)]" />
-                </div>
-                <h2 className="font-ai-title text-2xl sm:text-3xl text-ai-tech font-medium">Plaza Hotel, Lalitpur · Nepal</h2>
-                <p className="text-lg text-ai-grey-500 max-w-2xl leading-relaxed">
-                  Nepal&apos;s premier AI summit. Professional, clear, and informative keynote sessions and panel discussions with industry leaders focused on impact-driven innovation.
+
+                <p className="text-xl text-ai-grey-400 max-w-2xl leading-relaxed">
+                  A national platform exploring the intersection of policy, technology, and development. 
+                  Minimal, professional, and impact-driven innovation for Nepal's digital landscape.
                 </p>
-                <div className="flex flex-wrap gap-3 sm:gap-4 pt-4">
+
+                <div className="flex flex-wrap gap-5 pt-4">
                   <MagneticButton>
-                    <a href="#ticketing" className="bg-ai-white text-ai-black font-ai-title text-[10px] sm:text-[11px] tracking-[4px] uppercase px-8 sm:px-10 py-4 sm:py-5 hover:bg-ai-tech hover:text-ai-white transition-colors duration-500 inline-block">
+                    <a href="#ticketing" className="bg-ai-white text-ai-black font-ai-title text-[11px] tracking-[4px] uppercase px-10 py-5 hover:bg-ai-tech hover:text-ai-white transition-all duration-500 shadow-2xl shadow-ai-tech/10 inline-block">
                       Reserve Seat →
                     </a>
                   </MagneticButton>
                   <MagneticButton>
-                    <Link href="https://ai-summit-2026.domain.com/join" className="border border-ai-white/20 text-ai-white font-ai-title text-[10px] sm:text-[11px] tracking-[4px] uppercase px-8 sm:px-10 py-4 sm:py-5 hover:bg-ai-white hover:text-ai-black transition-all duration-500 inline-block">
+                    <Link href="https://ai-summit-2026.domain.com/join" className="border border-ai-white/20 text-ai-white font-ai-title text-[11px] tracking-[4px] uppercase px-10 py-5 hover:bg-ai-white hover:text-ai-black transition-all duration-500 backdrop-blur-sm inline-block">
                       Join as Partner →
                     </Link>
                   </MagneticButton>
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.2} className="w-full lg:w-auto shrink-0">
+                <div className="border border-ai-white/10 relative overflow-hidden group">
+                  <h3 className="font-ai-title text-[10px] tracking-[5px] uppercase text-ai-grey-500 mb-6 block p-6 pb-0">
+                    Countdown to Launch
+                  </h3>
+                  <div className="p-2 sm:p-4">
+                    <AISummitCountdown targetDate="2026-04-05T09:00:00" />
+                  </div>
                 </div>
               </AnimatedSection>
             </div>
@@ -119,31 +132,41 @@ export default function AISummit2026Page() {
           </div>
         </section>
 
-        {/* Focus Areas */}
-        <section className="bg-black section-py border-b border-ai-white/10">
+        {/* Themes */}
+        <section className="bg-black section-py border-b border-ai-white/10 relative">
           <div className="content-max">
             <AnimatedSection className="mb-12">
-              <h2 className="font-ai-title text-3xl sm:text-4xl text-ai-white font-bold mb-4">Focus Areas</h2>
-              <p className="font-ai-body text-ai-grey-500">Driving impact through technology and sustainable development.</p>
+              <h2 className="font-ai-title text-3xl sm:text-4xl text-ai-white font-bold mb-4 uppercase tracking-tighter">Themes</h2>
+              <p className="font-ai-body text-ai-grey-400">Exploring the core pillars of Nepal's AI future.</p>
             </AnimatedSection>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <AnimatedSection className="p-8 rounded-lg border border-ai-tech/30 bg-ai-tech/5 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 grad-tech opacity-20 blur-3xl group-hover:opacity-40 transition-opacity" />
-                <h3 className="font-ai-title text-2xl text-ai-tech font-bold mb-4">Technology</h3>
-                <p className="font-ai-body text-ai-grey-500 leading-relaxed"> 
-                  Exploring the latest in artificial intelligence, machine learning, and innovative tech solutions. Clear and informative insights for the digital era.
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <AnimatedSection className="p-10 rounded-2xl border border-ai-policy/30 bg-ai-policy/5 backdrop-blur-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-ai-policy opacity-20 blur-3xl group-hover:opacity-40 transition-opacity" />
+                <h3 className="font-ai-title text-2xl text-ai-policy font-bold mb-4 uppercase tracking-tight">Policy</h3>
+                <p className="font-ai-body text-ai-grey-300 leading-relaxed text-lg">
+                  Establishing ethical frameworks and governance to ensure responsible AI development and deployment in Nepal.
                 </p>
               </AnimatedSection>
-              <AnimatedSection className="p-8 rounded-lg border border-ai-dev/30 bg-ai-dev/5 relative overflow-hidden group">
+              <AnimatedSection className="p-10 rounded-2xl border border-ai-tech/30 bg-ai-tech/5 backdrop-blur-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 grad-tech opacity-20 blur-3xl group-hover:opacity-40 transition-opacity" />
+                <h3 className="font-ai-title text-2xl text-ai-tech font-bold mb-4 uppercase tracking-tight">Technology</h3>
+                <p className="font-ai-body text-ai-grey-300 leading-relaxed text-lg">
+                  Exploring the latest in artificial intelligence, machine learning, and innovative tech solutions.
+                </p>
+              </AnimatedSection>
+              <AnimatedSection className="p-10 rounded-2xl border border-ai-dev/30 bg-ai-dev/5 backdrop-blur-sm relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 grad-dev opacity-20 blur-3xl group-hover:opacity-40 transition-opacity" />
-                <h3 className="font-ai-title text-2xl text-ai-dev font-bold mb-4">Development</h3>
-                <p className="font-ai-body text-ai-grey-300 leading-relaxed">
+                <h3 className="font-ai-title text-2xl text-ai-dev font-bold mb-4 uppercase tracking-tight">Development</h3>
+                <p className="font-ai-body text-ai-grey-300 leading-relaxed text-lg">
                   Supportive and impact-driven approaches to building a sustainable ecosystem. Professional guidance for future-ready development.
                 </p>
               </AnimatedSection>
             </div>
           </div>
         </section>
+
+        {/* Speakers Section */}
+        <SpeakersSection />
 
         {/* Itinerary */}
         <section className="bg-ai-grey-900 section-py border-b border-ai-white/10">
