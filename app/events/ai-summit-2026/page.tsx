@@ -50,7 +50,7 @@ export default function AISummit2026Page() {
                     </a>
                   </MagneticButton>
                   <MagneticButton>
-                    <Link href="/join" className="border border-white/20 text-white font-body text-[10px] sm:text-[11px] tracking-[4px] uppercase px-8 sm:px-10 py-4 sm:py-5 hover:bg-white hover:text-void transition-all duration-500 inline-block">
+                    <Link href="https://ai-summit-2026.domain.com/join" className="border border-white/20 text-white font-body text-[10px] sm:text-[11px] tracking-[4px] uppercase px-8 sm:px-10 py-4 sm:py-5 hover:bg-white hover:text-void transition-all duration-500 inline-block">
                       Join as Partner →
                     </Link>
                   </MagneticButton>
