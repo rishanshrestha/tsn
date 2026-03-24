@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { name: "About", href: "/#about" },
   { name: "Programs", href: "/#programs" },
   { name: "Events", href: "/events" },
-  { name: "AI Summit", href: "/events/ai-summit-2026" },
   { name: "Gallery", href: "/gallery" },
   { name: "Team", href: "/#team" },
   { name: "Community", href: "/#community" },
@@ -71,18 +70,20 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="font-body text-[10px] tracking-[3px] uppercase text-surface/60 hover:text-surface transition-colors relative group overflow-hidden"
+              className={cn(
+                "font-body text-[10px] tracking-[3px] uppercase text-surface/60 hover:text-surface transition-colors relative group overflow-hidden flex items-center gap-2"
+              )}
             >
-              {link.name}
-              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-electric -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-expo" />
+                  {link.name}
+                  <span className="absolute bottom-0 left-0 w-full h-[1px] bg-electric -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-expo" />
             </Link>
           ))}
         </div>
 
         {/* Right Action */}
         <div className="hidden lg:block flex-shrink-0">
-          <Link href="/join" className="bg-surface text-void font-body text-[10px] tracking-[2.5px] uppercase px-8 py-3.5 hover:bg-electric hover:text-white transition-colors duration-500 inline-block">
-            Start Your Journey
+          <Link href="https://ai-summit-2026.domain.com" className="bg-surface text-void font-body text-[10px] tracking-[2.5px] uppercase px-8 py-3.5 hover:bg-electric hover:text-white transition-colors duration-500 inline-block">
+            Reserve your spot
           </Link>
         </div>
 
@@ -138,9 +139,13 @@ export function Navbar() {
                       <Link
                         href={link.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-surface hover:text-electric transition-colors"
+                        className={cn(
+                          "font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-surface hover:text-electric transition-colors flex items-center justify-center gap-3"
+                        )}
                       >
-                        {link.name}
+                        {
+                          link.name
+                        }
                       </Link>
                     </motion.div>
                   ))}
@@ -150,11 +155,11 @@ export function Navbar() {
                     transition={{ delay: 0.7 }}
                   >
                     <Link
-                      href="/join"
+                      href="https://ai-summit-2026.domain.com"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="mt-6 sm:mt-8 bg-surface text-void font-body text-[10px] sm:text-[11px] tracking-[3px] uppercase px-10 sm:px-12 py-3.5 sm:py-4 inline-block hover:bg-electric hover:text-white transition-colors"
                     >
-                      Apply Now
+                      Reserve your spot
                     </Link>
                   </motion.div>
                 </div>

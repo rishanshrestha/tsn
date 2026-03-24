@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
@@ -9,13 +10,6 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 export function Upcoming() {
   return (
     <section id="upcoming" className="bg-void min-h-screen relative flex items-center overflow-hidden border-t border-rule-inv">
-      {/* Ghost Text */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        <span className="font-label text-[14vw] sm:text-[12vw] lg:text-[16vw] text-white/5 uppercase leading-none select-none">
-          AI SUMMIT 2026
-        </span>
-      </div>
-
       <div className="content-max relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-rule-inv">
           {/* Left Column */}
@@ -31,49 +25,58 @@ export function Upcoming() {
                 </div>
               </div>
 
-              <div className="space-y-4 sm:space-y-6">
-                <h2 className="section-h2 text-white leading-tight">
-                  AI Summit <br /> <span className="italic font-normal">2026</span>
-                </h2>
-                <h3 className="section-h3 text-electric font-medium">
-                  Kathmandu · Nepal
-                </h3>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8">
+                <div className="relative h-[clamp(72px,12vw,120px)] w-[clamp(140px,24vw,240px)] flex-shrink-0">
+                  <Image
+                    src="/events/ai-summit-2026/images/ai-summit-logo-transparent.png"
+                    alt="AI Summit 2026"
+                    fill
+                    sizes="(max-width: 640px) 140px, 240px"
+                    className="object-contain object-left"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="section-h3 text-electric font-medium">
+                    Plaza Hotel, Lalitpur · Nepal
+                  </h3>
+                  <p className="font-body text-[13px] text-white/60">Student NPR 2,500 · General NPR 5,000</p>
+                </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 border-t border-rule-inv pt-8 sm:pt-12">
               <div className="space-y-2">
                 <span className="font-label text-[9px] tracking-[3px] uppercase text-white/20">Date</span>
-                <p className="font-body text-[13px] sm:text-[14px] text-white/60">Coming Soon</p>
+                <p className="font-body text-[13px] sm:text-[14px] text-white/60">April 5, 2026</p>
               </div>
               <div className="space-y-2">
                 <span className="font-label text-[9px] tracking-[3px] uppercase text-white/20">Venue</span>
-                <p className="font-body text-[13px] sm:text-[14px] text-white/60">Kathmandu</p>
+                <p className="font-body text-[13px] sm:text-[14px] text-white/60">Plaza Hotel, Lalitpur</p>
               </div>
               <div className="space-y-2">
                 <span className="font-label text-[9px] tracking-[3px] uppercase text-white/20">Format</span>
-                <p className="font-body text-[13px] sm:text-[14px] text-white/60">Summit + Workshops + Pitches</p>
+                <p className="font-body text-[13px] sm:text-[14px] text-white/60">Keynotes & Panel Discussions</p>
               </div>
               <div className="space-y-2">
                 <span className="font-label text-[9px] tracking-[3px] uppercase text-white/20">Expected</span>
-                <p className="font-body text-[13px] sm:text-[14px] text-white/60">500+ Attendees</p>
+                <p className="font-body text-[13px] sm:text-[14px] text-white/60">250+ Attendees</p>
               </div>
             </div>
           </div>
 
           {/* Right Column */}
           <div className="flex flex-col">
-            <CountdownTimer targetDate="2026-06-01T09:00:00" />
+            <CountdownTimer targetDate="2026-04-05T09:00:00" />
 
             <div className="flex-1 p-8 sm:p-12 md:p-16 lg:p-20 bg-void/40 backdrop-blur-sm flex flex-col justify-center space-y-8 sm:space-y-12 border-l border-rule-inv">
               <div className="space-y-2">
                 <span className="font-label text-[40px] sm:text-[48px] lg:text-[54px] text-white leading-none">NPR 2,500</span>
-                <p className="font-body text-[13px] sm:text-[14px] text-white/40 tracking-wider">Early Bird 2-Day General Pass</p>
+                <p className="font-body text-[13px] sm:text-[14px] text-white/40 tracking-wider">Student · NPR 5,000 General</p>
               </div>
 
               <MagneticButton className="w-full">
                 <Link href="/events/ai-summit-2026#ticketing" className="w-full bg-surface text-void font-body text-[10px] sm:text-[11px] tracking-[4px] uppercase py-5 sm:py-6 hover:bg-electric hover:text-white transition-all duration-500 shadow-xl group block text-center">
-                  Get Tickets
+                  Reserve Seat
                   <span className="ml-2 inline-block translate-x-0 group-hover:translate-x-2 transition-transform duration-300">→</span>
                 </Link>
               </MagneticButton>

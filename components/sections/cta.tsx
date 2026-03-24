@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -83,7 +84,15 @@ export function CTA() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <Link href="/events/ai-summit-2026" className="space-y-4 group cursor-pointer block">
                 <span className="font-label text-[9px] tracking-[3px] uppercase text-lead/60 group-hover:text-electric transition-colors">Attend</span>
-                <h4 className="font-display text-xl font-semibold text-void group-hover:translate-x-2 transition-transform duration-500">AI Summit 2026 →</h4>
+                <div className="relative h-10 w-28 group-hover:translate-x-2 transition-transform duration-500">
+                  <Image
+                    src="/events/ai-summit-2026/images/ai-summit-logo-transparent.png"
+                    alt="AI Summit 2026"
+                    fill
+                    sizes="112px"
+                    className="object-contain object-left"
+                  />
+                </div>
               </Link>
               <a href="https://www.thestartupnetworknepal.com/get-involved" target="_blank" rel="noopener noreferrer" className="space-y-4 group cursor-pointer block">
                 <span className="font-label text-[9px] tracking-[3px] uppercase text-lead/60 group-hover:text-electric transition-colors">Collaborate</span>
