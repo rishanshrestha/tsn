@@ -13,6 +13,23 @@
   --rule: #D8D5CE;
   --rule-inv: rgba(255, 255, 255, 0.1);
 
+  /* AI Summit 2026 Design Tokens */
+  --ai-black: #000000;
+  --ai-white: #FFFFFF;
+  --ai-grey-900: #1A1A1A;
+  --ai-grey-800: #333333;
+  --ai-grey-700: #4D4D4D;
+  --ai-grey-600: #666666;
+  --ai-grey-500: #808080;
+  --ai-grey-400: #999999;
+  --ai-grey-300: #B3B3B3;
+  --ai-grey-200: #CCCCCC;
+  --ai-grey-100: #E6E6E6;
+
+  --ai-policy: #3B82F6;
+  --ai-tech: #A855F7;
+  --ai-dev: #22C55E;
+
   /* Semantic mappings */
   --background: var(--void);
   --foreground: var(--surface);
@@ -31,6 +48,8 @@
   --font-display: var(--font-cormorant), "Cormorant Garamond", serif;
   --font-label: var(--font-bebas), "Bebas Neue", sans-serif;
   --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-ai-title: "Helvetica Now", "Helvetica", "Arial", sans-serif;
+  --font-ai-body: "Liberation Sans", "Helvetica", "Arial", sans-serif;
 
   --color-void: var(--void);
   --color-surface: var(--surface);
@@ -39,6 +58,15 @@
   --color-lead: var(--lead);
   --color-rule: var(--rule);
   --color-rule-inv: var(--rule-inv);
+
+  --color-ai-black: var(--ai-black);
+  --color-ai-white: var(--ai-white);
+  --color-ai-policy: var(--ai-policy);
+  --color-ai-tech: var(--ai-tech);
+  --color-ai-dev: var(--ai-dev);
+  --color-ai-grey-900: var(--ai-grey-900);
+  --color-ai-grey-500: var(--ai-grey-500);
+  --color-ai-grey-100: var(--ai-grey-100);
 }
 
 @layer base {
@@ -84,6 +112,13 @@
   }
   .section-py {
     @apply py-12 sm:py-16 md:py-20 lg:py-24;
+  }
+
+  .grad-tech {
+    background: linear-gradient(135deg, var(--ai-policy) 0%, var(--ai-tech) 100%);
+  }
+  .grad-dev {
+    background: linear-gradient(135deg, var(--ai-policy) 0%, var(--ai-dev) 100%);
   }
 }
 

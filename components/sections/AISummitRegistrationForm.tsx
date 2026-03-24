@@ -96,23 +96,23 @@ export function AISummitRegistrationForm() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-lg border border-electric/30 bg-electric/5 p-8 sm:p-12 text-center"
+        className="rounded-lg border border-ai-tech/30 bg-ai-tech/5 p-8 sm:p-12 text-center"
       >
-        <CheckCircle2 className="mx-auto h-14 w-14 text-electric mb-6" />
-        <h3 className="section-h3 text-white not-italic font-semibold mb-4">Registration Received</h3>
-        <p className="font-body text-[14px] text-white/70 max-w-md mx-auto mb-4">
+        <CheckCircle2 className="mx-auto h-14 w-14 text-ai-tech mb-6" />
+        <h3 className="font-ai-title text-2xl text-white font-semibold mb-4">Registration Received</h3>
+        <p className="font-ai-body text-[14px] text-ai-grey-400 max-w-md mx-auto mb-4">
           Thank you for registering! Check your email for your ticket confirmation.
           {ticketId && (
-            <span className="block mt-2 font-mono text-electric">Ticket ID: {ticketId}</span>
+            <span className="block mt-2 font-mono text-ai-tech">Ticket ID: {ticketId}</span>
           )}
         </p>
-        <p className="font-body text-[12px] text-white/50 mb-8">
-          We will contact you for payment confirmation.
+        <p className="font-ai-body text-[12px] text-ai-grey-500 mb-8">
+          Professional confirmation will be sent shortly.
         </p>
         <Button
           type="button"
           variant="outline"
-          className="border-white/30 text-white hover:bg-white/10"
+          className="border-ai-white/30 text-ai-white hover:bg-ai-white/10 font-ai-title uppercase tracking-widest text-[10px]"
           onClick={() => { setStatus("idle"); setTicketId(null); }}
         >
           Register Another
@@ -124,16 +124,16 @@ export function AISummitRegistrationForm() {
   return (
     <AnimatedSection className="space-y-8">
       <div>
-        <h2 className="section-h2 text-white">Reserve Your Seat</h2>
-        <p className="body-text text-white/55 max-w-xl mt-1">
-          Student (NPR 2,500) or General (NPR 5,000). Ticket confirmation will be sent to your email.
+        <h2 className="font-ai-title text-3xl sm:text-4xl text-ai-white font-bold">Reserve Your Seat</h2>
+        <p className="font-ai-body text-ai-grey-400 max-w-xl mt-2">
+          Clear, informative registration for Nepal&apos;s premier AI event.
         </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="fullName" className="text-white/80 font-label text-[10px] tracking-[3px] uppercase">
+            <Label htmlFor="fullName" className="text-ai-white/80 font-ai-title text-[10px] tracking-[3px] uppercase">
               Full Name *
             </Label>
             <Input
@@ -141,16 +141,16 @@ export function AISummitRegistrationForm() {
               {...register("fullName")}
               placeholder="Your full name"
               className={cn(
-                "bg-white/5 border-rule-inv text-white placeholder:text-white/40 h-12",
+                "bg-ai-white/5 border-ai-white/10 text-ai-white placeholder:text-ai-white/40 h-12 font-ai-body",
                 errors.fullName && "border-red-500"
               )}
             />
             {errors.fullName && (
-              <p className="font-body text-[12px] text-red-400">{errors.fullName.message}</p>
+              <p className="font-ai-body text-[12px] text-red-400">{errors.fullName.message}</p>
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-white/80 font-label text-[10px] tracking-[3px] uppercase">
+            <Label htmlFor="email" className="text-ai-white/80 font-ai-title text-[10px] tracking-[3px] uppercase">
               Email *
             </Label>
             <Input
@@ -159,19 +159,19 @@ export function AISummitRegistrationForm() {
               {...register("email")}
               placeholder="you@gmail.com"
               className={cn(
-                "bg-white/5 border-rule-inv text-white placeholder:text-white/40 h-12",
+                "bg-ai-white/5 border-ai-white/10 text-ai-white placeholder:text-ai-white/40 h-12 font-ai-body",
                 errors.email && "border-red-500"
               )}
             />
             {errors.email && (
-              <p className="font-body text-[12px] text-red-400">{errors.email.message}</p>
+              <p className="font-ai-body text-[12px] text-red-400">{errors.email.message}</p>
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-white/80 font-label text-[10px] tracking-[3px] uppercase">
+            <Label htmlFor="phone" className="text-ai-white/80 font-ai-title text-[10px] tracking-[3px] uppercase">
               Phone *
             </Label>
             <Input
@@ -180,16 +180,16 @@ export function AISummitRegistrationForm() {
               {...register("phone")}
               placeholder="+977 98XXXXXXXX"
               className={cn(
-                "bg-white/5 border-rule-inv text-white placeholder:text-white/40 h-12",
+                "bg-ai-white/5 border-ai-white/10 text-ai-white placeholder:text-ai-white/40 h-12 font-ai-body",
                 errors.phone && "border-red-500"
               )}
             />
             {errors.phone && (
-              <p className="font-body text-[12px] text-red-400">{errors.phone.message}</p>
+              <p className="font-ai-body text-[12px] text-red-400">{errors.phone.message}</p>
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-white/80 font-label text-[10px] tracking-[3px] uppercase">
+            <Label className="text-ai-white/80 font-ai-title text-[10px] tracking-[3px] uppercase">
               Ticket Category *
             </Label>
             <Select
@@ -198,18 +198,18 @@ export function AISummitRegistrationForm() {
             >
               <SelectTrigger
                 className={cn(
-                  "bg-white/5 border-rule-inv text-white h-12 w-full",
+                  "bg-ai-white/5 border-ai-white/10 text-ai-white h-12 w-full font-ai-body",
                   errors.category && "border-red-500"
                 )}
               >
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
-              <SelectContent className="bg-void border-rule-inv">
+              <SelectContent className="bg-black border-ai-white/10">
                 {TICKET_CATEGORIES.map((tier) => (
                   <SelectItem
                     key={tier.value}
                     value={tier.value}
-                    className="text-white focus:bg-electric/20 focus:text-white"
+                    className="text-ai-white focus:bg-ai-tech/20 focus:text-ai-white font-ai-body"
                   >
                     {tier.label} — {tier.price}
                   </SelectItem>
@@ -217,32 +217,32 @@ export function AISummitRegistrationForm() {
               </SelectContent>
             </Select>
             {errors.category && (
-              <p className="font-body text-[12px] text-red-400">{errors.category.message}</p>
+              <p className="font-ai-body text-[12px] text-red-400">{errors.category.message}</p>
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="organization" className="text-white/80 font-label text-[10px] tracking-[3px] uppercase">
+            <Label htmlFor="organization" className="text-ai-white/80 font-ai-title text-[10px] tracking-[3px] uppercase">
               Organization (optional)
             </Label>
             <Input
               id="organization"
               {...register("organization")}
               placeholder="Company / Institution"
-              className="bg-white/5 border-rule-inv text-white placeholder:text-white/40 h-12"
+              className="bg-ai-white/5 border-ai-white/10 text-ai-white placeholder:text-ai-white/40 h-12 font-ai-body"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="designation" className="text-white/80 font-label text-[10px] tracking-[3px] uppercase">
+            <Label htmlFor="designation" className="text-ai-white/80 font-ai-title text-[10px] tracking-[3px] uppercase">
               Designation (optional)
             </Label>
             <Input
               id="designation"
               {...register("designation")}
               placeholder="Your role / title"
-              className="bg-white/5 border-rule-inv text-white placeholder:text-white/40 h-12"
+              className="bg-ai-white/5 border-ai-white/10 text-ai-white placeholder:text-ai-white/40 h-12 font-ai-body"
             />
           </div>
         </div>
