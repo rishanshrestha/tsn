@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 interface CountdownProps {
   targetDate: string;
   className?: string;
+  mode?: "full" | "days";
 }
 
-export function AISummitCountdown({ targetDate, className }: CountdownProps) {
+export function AISummitCountdown({ targetDate, className, mode = "full" }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState({
     DAYS: 0,
     HRS: 0,
@@ -41,6 +42,29 @@ export function AISummitCountdown({ targetDate, className }: CountdownProps) {
 
     return () => clearInterval(interval);
   }, [targetDate]);
+
+  if (mode === "days") {
+    return (
+      <motion.div
+        initial={{ opacity: 0.9 }}
+        animate={{ opacity: [1, 0.75, 1] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+        className={cn("border border-[#D8CCAF] bg-[#FFF9ED] px-8 py-10 text-center", className)}
+      >
+        <motion.p
+          key={timeLeft.DAYS}
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="font-ai-title text-6xl sm:text-7xl tracking-tight text-[#1D363B]"
+        >
+          {timeLeft.DAYS}
+        </motion.p>
+        <p className="font-ai-title text-[11px] tracking-[4px] uppercase text-[#B38A2A] mt-4">
+          Days Left
+        </p>
+      </motion.div>
+    );
+  }
 
   return (
     <div className={cn("grid grid-cols-2 gap-0 border-l border-t border-ai-white/10", className)}>
