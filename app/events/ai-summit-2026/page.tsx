@@ -88,10 +88,9 @@ export default function AISummit2026Page() {
               <AnimatedSection className="flex-1 space-y-8 sm:space-y-10">
                 <div className="space-y-4">
                   <AISummitLogo size="hero" className="drop-shadow-[0_0_40px_rgba(0,71,225,0.25)]" />
-                  <p className="font-ai-title text-[11px] tracking-[4px] uppercase text-[#56716F]">AI Summit Nepal 2026</p>
-                  <h1 className="font-ai-title text-5xl sm:text-7xl lg:text-8xl text-[#1D363B] font-bold tracking-tighter leading-[0.9]">
+                  {/* <h1 className="font-ai-title text-5xl sm:text-7xl lg:text-8xl text-[#1D363B] font-bold tracking-tighter leading-[0.9]">
                     AI Revolution in the <br /> <span className="text-[#0F4C5C]">Context of Nepal</span>
-                  </h1>
+                  </h1> */}
                 </div>
 
                 <p className="text-xl text-[#546966] max-w-2xl leading-relaxed">

@@ -53,9 +53,6 @@ export function AISummitNavbar() {
           <Link href="/events/ai-summit-2026" className="shrink-0" aria-label="AI Summit home">
             <AISummitLogo size="nav" className="drop-shadow-[0_0_20px_rgba(15,76,92,0.16)]" />
           </Link>
-          <span className="hidden sm:block font-ai-title text-[10px] tracking-[3px] uppercase text-[#496A6E]">
-            AI Summit Nepal 2026
-          </span>
         </div>
 
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
