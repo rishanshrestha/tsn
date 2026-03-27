@@ -70,7 +70,7 @@ export const SUMMIT_MODERATORS = [
 ] as const;
 
 export const TICKET_TIERS = [
-  { id: "student", name: "Student Pass", price: "NPR 2,500", desc: "Valid student ID required", highlight: true },
+  { id: "student", name: "Student Pass", price: "Special Discount", desc: "Contact us for student discount verification - WhatsApp or email", highlight: true },
   { id: "general", name: "General Pass", price: "NPR 5,000", desc: "Full access" },
 ] as const;
 
